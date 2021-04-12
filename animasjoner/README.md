@@ -1,4 +1,4 @@
-# Animasjoner
+# Animasjoner <img style="float: right;" src="assets/icon/foreground.svg" height="64px"/>
 
 Animasjoner og bevegelse i et brukergrensesnitt bidrar til kommunikasjon og "det lille ekstra" som hever oppfattet kvalitet av en app, om brukt med omhu.
 
