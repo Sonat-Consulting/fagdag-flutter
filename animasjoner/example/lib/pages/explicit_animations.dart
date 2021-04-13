@@ -5,7 +5,7 @@ class ExplicitAnimationsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Eksplisitte animated'),
+        title: Text('Eksplisitte animasjoner'),
       ),
     );
   }
