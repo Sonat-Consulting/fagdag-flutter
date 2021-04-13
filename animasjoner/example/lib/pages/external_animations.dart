@@ -5,7 +5,7 @@ class ExternalAnimationsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Eksterne animated'),
+        title: Text('Eksterne animasjoner'),
       ),
     );
   }
