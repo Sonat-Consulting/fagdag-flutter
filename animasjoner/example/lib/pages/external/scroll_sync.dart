@@ -11,16 +11,20 @@ class _ExternalScrollSyncPageState extends State<ExternalScrollSyncPage>
   late AnimationController animationController;
   late ScrollController scrollController;
 
+  double get progress => scrollController.hasClients
+      ? scrollController.offset / scrollController.position.maxScrollExtent
+      : 0;
+
+  String get progressPercentage =>
+      (progress.clamp(0, 1) * 100).toStringAsFixed(0) + '%';
+
   @override
   void initState() {
     super.initState();
     scrollController = ScrollController()
-      ..addListener(
-        () {
-          animationController.value = scrollController.position.pixels;
-          print(animationController.value);
-        },
-      );
+      ..addListener(() {
+        animationController.value = progress;
+      });
 
     animationController = AnimationController(vsync: this);
   }
@@ -34,16 +38,23 @@ class _ExternalScrollSyncPageState extends State<ExternalScrollSyncPage>
           'assets/underwater.json',
           controller: animationController,
           fit: BoxFit.cover,
-          onLoaded: (composition) {
-            animationController
-              ..duration = composition.duration
-              ..forward();
-          },
         ),
-        SingleChildScrollView(
-          controller: scrollController,
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 4,
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: AnimatedBuilder(
+              animation: animationController,
+              builder: (context, _) =>
+                  Text('Synk med scroll ($progressPercentage)'),
+            ),
+          ),
+          body: SingleChildScrollView(
+            controller: scrollController,
+            child: Container(
+              height: MediaQuery.of(context).size.height * 4,
+            ),
           ),
         ),
       ],
