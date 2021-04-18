@@ -1,5 +1,32 @@
 import 'package:flutter/material.dart';
 
+class ColoredHero extends StatelessWidget {
+  final int index;
+
+  const ColoredHero({Key? key, required this.index}) : super(key: key);
+
+  Color get color => Colors.primaries[index];
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: index,
+      child: Material(
+        color: color,
+        child: Center(
+          child: Text(
+            'rgb(${color.red}, ${color.green}, ${color.blue})',
+            style: TextStyle(
+              color:
+                  color.computeLuminance() > 0.5 ? Colors.black : Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class ImplicitHeroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,29 +49,13 @@ class ImplicitHeroPage extends StatelessWidget {
   }
 
   Widget buildContainer(BuildContext context, int index) {
-    final color = Colors.primaries[index];
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (_) => HeroTransitionPage(index: index),
         ));
       },
-      child: Hero(
-        tag: index,
-        child: Material(
-          color: color,
-          child: Center(
-            child: Text(
-              'rgb(${color.red}, ${color.green}, ${color.blue})',
-              style: TextStyle(
-                color: color.computeLuminance() > 0.5
-                    ? Colors.black
-                    : Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ),
+      child: ColoredHero(index: index),
     );
   }
 }
@@ -54,40 +65,25 @@ class HeroTransitionPage extends StatelessWidget {
 
   const HeroTransitionPage({Key? key, required this.index}) : super(key: key);
 
+  List<Widget> get generatedChildren {
+    return List.generate(100, (i) => i + 1).map((i) {
+      return ListTile(
+        title: Text('Tile no. $i'),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final color = Colors.primaries[index];
-
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             expandedHeight: 200.0,
-            flexibleSpace: Hero(
-              tag: index,
-              child: Material(
-                color: color,
-                child: Center(
-                  child: Text(
-                    'rgb(${color.red}, ${color.green}, ${color.blue})',
-                    style: TextStyle(
-                      color: color.computeLuminance() > 0.5
-                          ? Colors.black
-                          : Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            flexibleSpace: ColoredHero(index: index),
           ),
           SliverList(
-            delegate: SliverChildListDelegate(
-              List.generate(100, (i) => i + 1).map((i) {
-                return ListTile(
-                  title: Text('Tile no. $i'),
-                );
-              }).toList(),
-            ),
+            delegate: SliverChildListDelegate(generatedChildren),
           ),
         ],
       ),
