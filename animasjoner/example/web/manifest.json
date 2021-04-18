@@ -1,6 +1,6 @@
 {
-    "name": "animated_example",
-    "short_name": "animated_example",
+    "name": "animations_example",
+    "short_name": "animations_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

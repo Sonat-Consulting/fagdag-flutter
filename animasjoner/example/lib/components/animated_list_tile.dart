@@ -1,4 +1,4 @@
-import 'package:animated_example/components/lottie_icon.dart';
+import 'package:animations_example/components/lottie_icon.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
