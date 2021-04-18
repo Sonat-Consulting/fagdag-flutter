@@ -1,4 +1,4 @@
-package no.sonat.animated_example
+package no.sonat.animations_example
 
 import io.flutter.embedding.android.FlutterActivity
 

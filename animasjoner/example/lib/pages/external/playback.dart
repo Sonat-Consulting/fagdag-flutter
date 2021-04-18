@@ -16,7 +16,7 @@ class ExternalSimpleControlsPage extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            title: Text('Enkle kontroller'),
+            title: Text('Enkel avspilling'),
           ),
         ),
       ],

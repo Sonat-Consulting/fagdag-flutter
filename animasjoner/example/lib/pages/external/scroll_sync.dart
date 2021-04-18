@@ -11,7 +11,10 @@ class _ExternalScrollSyncPageState extends State<ExternalScrollSyncPage>
   late AnimationController animationController;
   late ScrollController scrollController;
 
-  double get progress => scrollController.hasClients
+  bool isAttached(ScrollController c) =>
+      c.hasClients && c.position.hasContentDimensions;
+
+  double get progress => isAttached(scrollController)
       ? scrollController.offset / scrollController.position.maxScrollExtent
       : 0;
 

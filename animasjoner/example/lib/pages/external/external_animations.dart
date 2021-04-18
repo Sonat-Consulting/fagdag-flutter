@@ -1,4 +1,4 @@
-import 'package:animated_example/components/animated_list_tile.dart';
+import 'package:animations_example/components/animated_list_tile.dart';
 import 'package:flutter/material.dart';
 
 class ExternalAnimationsPage extends StatelessWidget {

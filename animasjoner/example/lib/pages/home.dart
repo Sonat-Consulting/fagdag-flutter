@@ -1,5 +1,5 @@
-import 'package:animated_example/components/animated_list_tile.dart';
-import 'package:animated_example/components/lottie_icon.dart';
+import 'package:animations_example/components/animated_list_tile.dart';
+import 'package:animations_example/components/lottie_icon.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

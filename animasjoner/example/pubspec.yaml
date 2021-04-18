@@ -1,5 +1,5 @@
-name: animated_example
-description: Et prosjekt som tar for seg animated i Flutter.
+name: animations_example
+description: Et prosjekt som tar for seg animasjoner i Flutter.
 publish_to: 'none'
 version: 1.0.0+1
 
