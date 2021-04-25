@@ -2,7 +2,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'model.dart';
 
-final host = "localhost:8082";
+final host = "localhost:8082"; //Web
+//final host = "10.0.2.2:8082"; //Android network
+
 
 final base = "observations";
 
@@ -32,7 +34,7 @@ Future<Observation> createObservation(Observation obs) async {
   if (response.statusCode == 201) {
     return Observation.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to create observation $obs due to $response');
+    throw Exception('Failed to create observation $obs due to ${response.statusCode}');
   }
 }
 
@@ -49,7 +51,7 @@ Future<Observation> getObservation(int id) async {
   if (response.statusCode == 200) {
     return Observation.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to retrieve observation with id: $id due to $response');
+    throw Exception('Failed to retrieve observation with id: $id due to ${response.statusCode}');
   }
 }
 
@@ -62,7 +64,10 @@ Future<List<Observation>> listObservations() async {
     return array
         .map((e) => Observation.fromJson(e))
         .toList();
-  } else {
-    throw Exception('Failed list observations due to $response');
+  } else if (response.statusCode == 404) {
+    return [];
+  }
+  else {
+    throw Exception('Failed list observations due to ${response.statusCode}');
   }
 }
