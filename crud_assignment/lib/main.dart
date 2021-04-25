@@ -172,6 +172,8 @@ class _ListLineState extends State<ListLine> {
       color: Colors.blue[400],
       child: Row(
           children: <Widget>[
+            Image(image: AssetImage('images/globular.png')),
+
             Align(
                 alignment: Alignment.centerLeft,
                 child:Padding(
