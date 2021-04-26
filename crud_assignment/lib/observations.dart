@@ -5,7 +5,6 @@ import 'model.dart';
 final host = "localhost:8082"; //Web
 //final host = "10.0.2.2:8082"; //Android network
 
-
 final base = "observations";
 
 Future<http.Response> deleteObservation(int id) async {
@@ -18,7 +17,6 @@ Future<http.Response> deleteObservation(int id) async {
   return response;
 }
 
-
 Future<Observation> createObservation(Observation obs) async {
   final response = await http.post(
     Uri.http(host, base),
@@ -28,46 +26,41 @@ Future<Observation> createObservation(Observation obs) async {
     body: jsonEncode(<String, String>{
       'userId': obs.userId,
       'title': obs.title,
-      'description' : obs.description ?? ""
+      'description': obs.description ?? ""
     }),
   );
   if (response.statusCode == 201) {
     return Observation.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to create observation $obs due to ${response.statusCode}');
+    throw Exception(
+        'Failed to create observation $obs due to ${response.statusCode}');
   }
 }
 
-
 Future<Observation> updateObservation(Observation obs) async {
   //TODO Assignment 1, implement this and ensure it is called from the UI and updates the state
-  return Future.delayed(Duration(seconds: 2)).then((value) => throw Exception("Not implemented"));
+  return Future.delayed(Duration(seconds: 2))
+      .then((value) => throw Exception("Not implemented"));
 }
-
-
 
 Future<Observation> getObservation(int id) async {
   final response = await http.get(Uri.http(host, '$base/$id'));
   if (response.statusCode == 200) {
     return Observation.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to retrieve observation with id: $id due to ${response.statusCode}');
+    throw Exception(
+        'Failed to retrieve observation with id: $id due to ${response.statusCode}');
   }
 }
-
-
 
 Future<List<Observation>> listObservations() async {
   final response = await http.get(Uri.http(host, base));
   if (response.statusCode == 200) {
     final List<dynamic> array = jsonDecode(response.body);
-    return array
-        .map((e) => Observation.fromJson(e))
-        .toList();
+    return array.map((e) => Observation.fromJson(e)).toList();
   } else if (response.statusCode == 404) {
     return [];
-  }
-  else {
+  } else {
     throw Exception('Failed list observations due to ${response.statusCode}');
   }
 }

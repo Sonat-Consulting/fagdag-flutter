@@ -1,12 +1,15 @@
-
-
 class Observation {
   final int? id;
   final String userId;
   final String title;
   final String? description;
 
-  Observation({this.id,required this.userId, required this.title, this.description});
+  Observation({
+    this.id,
+    required this.userId,
+    required this.title,
+    this.description,
+  });
 
   factory Observation.fromJson(Map<String, dynamic> json) {
     return Observation(
