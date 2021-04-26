@@ -50,7 +50,7 @@ class _ObservationPageState extends State<ObservationPage> {
     _observations = listObservations();
   }
 
-  Widget buildList(List<Observation> observations) {
+  Widget buildList(List<Observation> observations,bool withProgress) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -81,39 +81,41 @@ class _ObservationPageState extends State<ObservationPage> {
                       }
                   );
                 })),
-        Form(
-            key:_formKey,
-            child: Column(children: <Widget>[
-              TextFormField(
-                  controller: titleController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please add a title';
+        withProgress ?
+          CircularProgressIndicator() :
+          Form(
+              key:_formKey,
+              child: Column(children: <Widget>[
+                TextFormField(
+                    controller: titleController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please add a title';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(labelText: 'Enter observation title'),
+                ),
+                TextFormField(
+                    controller: descriptionController,
+                    validator: (value) {
+                      return null;
+                    },
+                    decoration: InputDecoration(labelText: 'Enter observation description'),
+                    ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      final newObservation = Observation(userId:userId,title:titleController.text,description:descriptionController.text);
+                      setState(() {
+                        _observations = createObservation(newObservation)
+                          .then((value) => observations + [value] );
+                      });
                     }
-                    return null;
                   },
-                  decoration: InputDecoration(labelText: 'Enter observation title'),
-              ),
-              TextFormField(
-                  controller: descriptionController,
-                  validator: (value) {
-                    return null;
-                  },
-                  decoration: InputDecoration(labelText: 'Enter observation description'),
-                  ),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    final newObservation = Observation(userId:userId,title:titleController.text,description:descriptionController.text);
-                    setState(() {
-                      _observations = createObservation(newObservation)
-                        .then((value) => observations + [value] );
-                    });
-                  }
-                },
-                child: Text('Create Observation'),
-              ),
-            ]))
+                  child: Text('Create Observation'),
+                ),
+              ]))
       ],
     );
   }
@@ -134,13 +136,19 @@ class _ObservationPageState extends State<ObservationPage> {
     {
       if (snapshot.connectionState == ConnectionState.done) {
         if (snapshot.hasData) {
-          return buildList(snapshot.data!);
+          return buildList(snapshot.data!,false);
         }
         else if (snapshot.hasError) {
           // TODO implement in Assignment 2
           return Text("${snapshot.error}");
         }
       }
+
+      //If the list has some data, replace bottom with progress indicator
+      if(snapshot.hasData) {
+        return buildList(snapshot.data!,true);
+      }
+
       return CircularProgressIndicator();
     })
       ),
