@@ -69,7 +69,15 @@ class _ObservationPageState extends State<ObservationPage> {
                         });
                       },
                       onUpdate: (toUpdate) {
-                        // TODO implement in Assignment 1
+                        setState(() {
+                          _observations = updateObservation(toUpdate).then(
+                                  (value) =>
+                                  observations.map((element) =>
+                                  element.id == toUpdate.id
+                                      ? toUpdate
+                                      : element).toList()
+                          );
+                        });
                       }
                   );
                 })),
@@ -158,7 +166,11 @@ class ListLine extends StatefulWidget {
 
 class _ListLineState extends State<ListLine> {
 
+  final _formKey = GlobalKey<FormState>();
   bool edit = false;
+  TextEditingController titleController = TextEditingController(text:"");
+  TextEditingController descriptionController = TextEditingController(text:"");
+
 
   @override
   void initState() {
@@ -167,105 +179,113 @@ class _ListLineState extends State<ListLine> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.all(2),
-      color: Colors.blue[400],
-      child: Row(
-          children: edit ?  getEditable() : getNonEditable(),
-      )
-    );
+    return edit ?  getEditable() : getNonEditable();
   }
 
 
-  List<Widget> getNonEditable() {
-    return [Image(image: AssetImage('images/globular.png')),
-    Align(
-        alignment: Alignment.centerLeft,
-        child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              '${widget.observation.title}',
-              style: TextStyle(fontSize: 18),
-            ))
-    ),
-    Expanded(child:
-    Text(
-      '${widget.observation.description}',
-      style: TextStyle(fontSize: 12),
-    )
-    ),
-    Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Row(children: <Widget>[
-          ElevatedButton(
-              child: Text('Edit'),
-              onPressed: () {
-                setState(() {
-                  edit = true;
-                });
-              }
-          ),
-          ElevatedButton(
-              child: Text('Delete'),
-              onPressed: () {
-                widget.onDelete(widget.observation);
-              }
+  Widget getNonEditable() {
+
+    return
+      Container(
+          height: 50,
+          margin: EdgeInsets.all(2),
+          color: Colors.blue[400],
+          child : Row(children:[
+            Image(image: AssetImage('images/globular.png')),
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      '${widget.observation.title}',
+                      style: TextStyle(fontSize: 18),
+                    ))
+            ),
+            Expanded(child:
+            Text(
+              '${widget.observation.description}',
+              style: TextStyle(fontSize: 12),
+            )
+            ),
+            Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Row(children: <Widget>[
+                  ElevatedButton(
+                      child: Text('Edit'),
+                      onPressed: () {
+                        setState(() {
+                          titleController.text = widget.observation.title;
+                          descriptionController.text = widget.observation.description ?? "";
+                          edit = true;
+                        });
+                      }
+                  ),
+                  ElevatedButton(
+                      child: Text('Delete'),
+                      onPressed: () {
+                        widget.onDelete(widget.observation);
+                      }
+                  )
+                ]
+                )
+            )
+          ]
           )
-        ]
-        )
-    )
-    ];
+      );
   }
 
 
-  List<Widget> getEditable() {
-    return [Image(image: AssetImage('images/globular.png')),
-    Align(
-        alignment: Alignment.centerLeft,
-        child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              '${widget.observation.title}',
-              style: TextStyle(fontSize: 18),
-            ))
-    ),
-    Expanded(child:
-    Text(
-      '${widget.observation.description}',
-      style: TextStyle(fontSize: 12),
-    )
-    ),
-    Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Row(children: <Widget>[
-          ElevatedButton(
+
+  Widget getEditable() {
+    return Form(
+        key:_formKey,
+        child: Column(children: <Widget>[
+          TextFormField(
+            controller: titleController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please add a title';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: descriptionController,
+            validator: (value) {
+              return null;
+            },
+          ),
+          Row(children:[
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                setState(() {
+                edit = false;
+                });
+
+                final newObservation = Observation(
+                  id:widget.observation.id,
+                  userId:widget.observation.userId,
+                  title:titleController.text,
+                  description:descriptionController.text
+                );
+                widget.onUpdate(newObservation);
+                }
+              },
               child: Text('Save'),
+            ),
+            ElevatedButton(
               onPressed: () {
-                widget.onUpdate(widget.observation);
+                if (_formKey.currentState!.validate()) {
                 setState(() {
                   edit = false;
                 });
-              }
-          ),
-          ElevatedButton(
+                }
+              },
               child: Text('Cancel'),
-              onPressed: () {
-                setState(() {
-                  edit = false;
-                });
-              }
-          ),
-          ElevatedButton(
-              child: Text('Delete'),
-              onPressed: () {
-                widget.onDelete(widget.observation);
-              }
-          )
-        ]
-        )
-    )
-    ];
+            )]
+            )
+        ]));
   }
 
 }
