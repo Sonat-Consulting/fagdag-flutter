@@ -139,12 +139,23 @@ class _ObservationPageState extends State<ObservationPage> {
           return buildList(snapshot.data!,false);
         }
         else if (snapshot.hasError) {
-          // TODO implement in Assignment 2
-          return Text("${snapshot.error}");
+          return Column(children:[
+            Text("An unexpected error occured due to: ${snapshot.error}.\n Refresh to see current state"),
+            ElevatedButton(
+                child: Text('Refresh observations'),
+                onPressed: () {
+                  setState(() {
+                    _observations = listObservations();
+                  });
+                }
+            )
+          ]
+
+          );
         }
       }
 
-      //If the list has some data, replace bottom with progress indicator
+      //If we have old data, replace create form with progress indicator instead of the entire view
       if(snapshot.hasData) {
         return buildList(snapshot.data!,true);
       }
