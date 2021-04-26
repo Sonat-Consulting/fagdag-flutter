@@ -40,8 +40,23 @@ Future<Observation> createObservation(Observation obs) async {
 
 
 Future<Observation> updateObservation(Observation obs) async {
-  //TODO Assignment 1, implement this and ensure it is called from the UI and updates the state
-  return Future.delayed(Duration(seconds: 2)).then((value) => throw Exception("Not implemented"));
+  final int id = obs.id!; //Ensure fail early if non null
+  final response = await http.put(
+    Uri.http(host, '$base/$id'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'userId': obs.userId,
+      'title': obs.title,
+      'description' : obs.description ?? ""
+    }),
+  );
+  if (response.statusCode == 200) {
+    return Observation.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to create observation $obs due to ${response.statusCode}');
+  }
 }
 
 
