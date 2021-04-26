@@ -34,7 +34,7 @@ class _CarsListState extends State<CarsList> {
           future: carListFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return buildProgressIndicator(context);
             } else if (snapshot.hasData) {
               List<Car> cars = snapshot.data;
               return SizedBox(
@@ -56,5 +56,11 @@ class _CarsListState extends State<CarsList> {
         _currentCar != null ? CarDetail(car: _currentCar) : Container()
       ],
     );
+  }
+
+  SizedBox buildProgressIndicator(BuildContext context) {
+    return SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: Center(child: CircularProgressIndicator()));
   }
 }

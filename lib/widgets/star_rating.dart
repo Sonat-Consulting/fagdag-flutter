@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 
 class StarRatingWidget extends StatelessWidget {
   final int value;
-  final Widget filledStar;
-  final Widget unfilledStar;
+  final Widget filledStar =
+      Icon(Icons.star_border_outlined, color: Colors.yellow[800]);
+  final Widget unfilledStar =
+      Icon(Icons.star_border_outlined, color: Colors.grey);
 
-  const StarRatingWidget({
+  final Function onRatingChanged;
+
+  StarRatingWidget({
     Key key,
     this.value = 0,
-    @required this.filledStar,
-    @required this.unfilledStar,
+    this.onRatingChanged,
   })  : assert(value != null),
         super(key: key);
 
@@ -18,8 +21,12 @@ class StarRatingWidget extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(5, (index) {
-        return index < value ? filledStar : unfilledStar;
+        return GestureDetector(
+            onTap: () => handleStarTap(index + 1),
+            child: index < value ? filledStar : unfilledStar);
       }),
     );
   }
+
+  handleStarTap(int index) => onRatingChanged(index);
 }

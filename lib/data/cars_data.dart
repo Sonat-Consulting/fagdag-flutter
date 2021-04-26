@@ -39,7 +39,7 @@ class Car {
   final String model;
   final int year;
   final Uri photoUrl;
-  final StarRating rating;
+  StarRating rating;
 
   Car({this.brand, this.model, this.year, this.photoUrl, this.rating});
 }
@@ -48,5 +48,5 @@ class StarRating {
   final int stars;
 
   StarRating(this.stars)
-      : assert(stars > 0 && stars < 5, 'verdi må være mellom 1 og 5');
+      : assert(stars > 0 && stars <= 5, 'verdi må være mellom 1 og 5');
 }

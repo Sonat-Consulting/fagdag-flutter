@@ -2,10 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fagdag/data/cars_data.dart';
 import 'package:flutter_fagdag/widgets/star_rating.dart';
 
-class CarDetail extends StatelessWidget {
+class CarDetail extends StatefulWidget {
   final Car car;
 
-  const CarDetail({Key key, this.car}) : super(key: key);
+  CarDetail({Key key, this.car}) : super(key: key);
+
+  @override
+  _CarDetailState createState() => _CarDetailState();
+}
+
+class _CarDetailState extends State<CarDetail> {
+  String message;
+
+  @override
+  void initState() {
+    message = "";
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    setState(() {
+      message = "";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +43,7 @@ class CarDetail extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               Image.network(
-                car.photoUrl.toString(),
+                widget.car.photoUrl.toString(),
                 fit: BoxFit.fill,
               ),
             ],
@@ -34,34 +55,41 @@ class CarDetail extends StatelessWidget {
           margin: EdgeInsets.all(10),
         ),
       ),
+      Text(message,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
     ]);
   }
 
   Table buildTable() {
     return Table(
-        border: TableBorder.lerp(
-            TableBorder(top: BorderSide(width: 2, color: Colors.red)),
-            TableBorder(bottom: BorderSide(width: 4, color: Colors.green)),
-            0.5),
-        children: [
-          buildTableRow('Merke', Text(car.brand)),
-          buildTableRow('Modell', Text(car.model)),
-          buildTableRow(
-            'Årsmodell',
-            Text(
-              car.year.toString(),
-            ),
+      border: TableBorder.lerp(
+          TableBorder(top: BorderSide(width: 2, color: Colors.red)),
+          TableBorder(bottom: BorderSide(width: 4, color: Colors.green)),
+          0.5),
+      children: [
+        buildTableRow('Merke', Text(widget.car.brand)),
+        buildTableRow('Modell', Text(widget.car.model)),
+        buildTableRow(
+          'Årsmodell',
+          Text(
+            widget.car.year.toString(),
           ),
-          buildTableRow(
-              'Rating',
-              StarRatingWidget(
-                value: car.rating.stars,
-                filledStar:
-                    Icon(Icons.star_border_outlined, color: Colors.yellow[800]),
-                unfilledStar:
-                    Icon(Icons.star_border_outlined, color: Colors.grey),
-              )),
-        ]);
+        ),
+        buildTableRow(
+          'Eiers rating',
+          StarRatingWidget(
+            value: widget.car.rating.stars,
+            onRatingChanged: (newValue) {
+              setState(() {
+                message = "Du ønsker å gi denne bilen ratingen $newValue";
+                widget.car.rating = new StarRating(newValue);
+              });
+            },
+          ),
+        ),
+        buildTableRow('', Text('(Trykk for å gi din rating)')),
+      ],
+    );
   }
 
   TableRow buildTableRow(String label, Widget value) {
