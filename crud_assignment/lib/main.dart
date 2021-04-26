@@ -129,6 +129,7 @@ class _ObservationPageState extends State<ObservationPage> {
           return buildList(snapshot.data!);
         }
         else if (snapshot.hasError) {
+          // TODO implement in Assignment 2
           return Text("${snapshot.error}");
         }
       }
@@ -171,44 +172,100 @@ class _ListLineState extends State<ListLine> {
       margin: EdgeInsets.all(2),
       color: Colors.blue[400],
       child: Row(
-          children: <Widget>[
-            Image(image: AssetImage('images/globular.png')),
-
-            Align(
-                alignment: Alignment.centerLeft,
-                child:Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child:Text(
-                      '${widget.observation.title}',
-                      style: TextStyle(fontSize: 18),
-                    ))
-            ),
-            Expanded(child:
-            Text(
-              '${widget.observation.description}',
-              style: TextStyle(fontSize: 12),
-            )
-            ),
-            Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Row(children: <Widget>[
-                  ElevatedButton(
-                      child: Text('Edit'),
-                      onPressed: () {
-                        widget.onUpdate(widget.observation);
-                      }
-                  ),
-                  ElevatedButton(
-                      child: Text('Delete'),
-                      onPressed: () {
-                        widget.onDelete(widget.observation);
-                      }
-                  )
-                ]
-                )
-        )
-      ]),
+          children: edit ?  getEditable() : getNonEditable(),
+      )
     );
+  }
+
+
+  List<Widget> getNonEditable() {
+    return [Image(image: AssetImage('images/globular.png')),
+    Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              '${widget.observation.title}',
+              style: TextStyle(fontSize: 18),
+            ))
+    ),
+    Expanded(child:
+    Text(
+      '${widget.observation.description}',
+      style: TextStyle(fontSize: 12),
+    )
+    ),
+    Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Row(children: <Widget>[
+          ElevatedButton(
+              child: Text('Edit'),
+              onPressed: () {
+                setState(() {
+                  edit = true;
+                });
+              }
+          ),
+          ElevatedButton(
+              child: Text('Delete'),
+              onPressed: () {
+                widget.onDelete(widget.observation);
+              }
+          )
+        ]
+        )
+    )
+    ];
+  }
+
+
+  List<Widget> getEditable() {
+    return [Image(image: AssetImage('images/globular.png')),
+    Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              '${widget.observation.title}',
+              style: TextStyle(fontSize: 18),
+            ))
+    ),
+    Expanded(child:
+    Text(
+      '${widget.observation.description}',
+      style: TextStyle(fontSize: 12),
+    )
+    ),
+    Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Row(children: <Widget>[
+          ElevatedButton(
+              child: Text('Save'),
+              onPressed: () {
+                widget.onUpdate(widget.observation);
+                setState(() {
+                  edit = false;
+                });
+              }
+          ),
+          ElevatedButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                setState(() {
+                  edit = false;
+                });
+              }
+          ),
+          ElevatedButton(
+              child: Text('Delete'),
+              onPressed: () {
+                widget.onDelete(widget.observation);
+              }
+          )
+        ]
+        )
+    )
+    ];
   }
 
 }
