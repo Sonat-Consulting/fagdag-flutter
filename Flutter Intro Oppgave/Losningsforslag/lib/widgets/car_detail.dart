@@ -30,14 +30,11 @@ class _CarDetailState extends State<CarDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: buildTable(),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(children: [
+        buildTable(),
+        Card(
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: Stack(
@@ -54,10 +51,12 @@ class _CarDetailState extends State<CarDetail> {
           elevation: 5,
           margin: EdgeInsets.all(10),
         ),
-      ),
-      Text(message,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-    ]);
+        Center(
+          child: Text(message,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+        ),
+      ]),
+    );
   }
 
   Table buildTable() {
