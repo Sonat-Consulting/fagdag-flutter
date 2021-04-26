@@ -12,7 +12,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,8 +38,9 @@ class _ObservationPageState extends State<ObservationPage> {
 
   final userId = "c3fe54f7-9aeb-4719-9bd9-9b6bdd3efc62";
 
-  TextEditingController titleController = TextEditingController(text:"Title");
-  TextEditingController descriptionController = TextEditingController(text:"...");
+  TextEditingController titleController = TextEditingController(text: "Title");
+  TextEditingController descriptionController =
+      TextEditingController(text: "...");
 
   late Future<List<Observation>> _observations;
 
@@ -55,63 +55,73 @@ class _ObservationPageState extends State<ObservationPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Expanded(
-            child: ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: observations.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListLine(
-                      observation:observations[index],
-                      onDelete: (toDelete) {
-                        setState(() {
-                          _observations = deleteObservation(toDelete.id!)
-                              .then((value) => observations.where((element) => element.id != toDelete.id).toList()
-                          );
-                        });
-                      },
-                      onUpdate: (toUpdate) {
-                        // TODO implement in Assignment 1
-                      }
-                  );
-                })),
+          child: ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: observations.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListLine(
+                observation: observations[index],
+                onDelete: (toDelete) {
+                  setState(() {
+                    _observations = deleteObservation(toDelete.id!).then(
+                        (value) => observations
+                            .where((element) => element.id != toDelete.id)
+                            .toList());
+                  });
+                },
+                onUpdate: (toUpdate) {
+                  // TODO implement in Assignment 1
+                },
+              );
+            },
+          ),
+        ),
         Form(
-            key:_formKey,
-            child: Column(children: <Widget>[
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
               TextFormField(
-                  controller: titleController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please add a title';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(labelText: 'Enter observation title'),
+                controller: titleController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please add a title';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Enter observation title',
+                ),
               ),
               TextFormField(
-                  controller: descriptionController,
-                  validator: (value) {
-                    return null;
-                  },
-                  decoration: InputDecoration(labelText: 'Enter observation description'),
-                  ),
+                controller: descriptionController,
+                validator: (value) {
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Enter observation description',
+                ),
+              ),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    final newObservation = Observation(userId:userId,title:titleController.text,description:descriptionController.text);
+                    final newObservation = Observation(
+                        userId: userId,
+                        title: titleController.text,
+                        description: descriptionController.text);
                     setState(() {
                       _observations = createObservation(newObservation)
-                        .then((value) => observations + [value] );
+                          .then((value) => observations + [value]);
                     });
                   }
                 },
                 child: Text('Create Observation'),
               ),
-            ]))
+            ],
+          ),
+        ),
       ],
     );
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -121,29 +131,30 @@ class _ObservationPageState extends State<ObservationPage> {
       ),
       body: Center(
         child: FutureBuilder<List<Observation>>(
-            future: _observations,
-            builder: (context, snapshot)
-    {
-      if (snapshot.connectionState == ConnectionState.done) {
-        if (snapshot.hasData) {
-          return buildList(snapshot.data!);
-        }
-        else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
-        }
-      }
-      return CircularProgressIndicator();
-    })
+          future: _observations,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                return buildList(snapshot.data!);
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+            }
+            return CircularProgressIndicator();
+          },
+        ),
       ),
     );
   }
 }
 
-
-
-
 class ListLine extends StatefulWidget {
-  ListLine({Key? key, required this.observation, required this.onDelete,required this.onUpdate}) : super(key: key);
+  ListLine(
+      {Key? key,
+      required this.observation,
+      required this.onDelete,
+      required this.onUpdate})
+      : super(key: key);
 
   final Observation observation;
   final Function(Observation) onDelete;
@@ -151,12 +162,9 @@ class ListLine extends StatefulWidget {
 
   @override
   _ListLineState createState() => _ListLineState();
-
 }
 
-
 class _ListLineState extends State<ListLine> {
-
   bool edit = false;
 
   @override
@@ -171,44 +179,45 @@ class _ListLineState extends State<ListLine> {
       margin: EdgeInsets.all(2),
       color: Colors.blue[400],
       child: Row(
-          children: <Widget>[
-            Image(image: AssetImage('images/globular.png')),
-
-            Align(
-                alignment: Alignment.centerLeft,
-                child:Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child:Text(
-                      '${widget.observation.title}',
-                      style: TextStyle(fontSize: 18),
-                    ))
+        children: <Widget>[
+          Image(image: AssetImage('images/globular.png')),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                '${widget.observation.title}',
+                style: TextStyle(fontSize: 18),
+              ),
             ),
-            Expanded(child:
-            Text(
+          ),
+          Expanded(
+            child: Text(
               '${widget.observation.description}',
               style: TextStyle(fontSize: 12),
-            )
             ),
-            Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Row(children: <Widget>[
-                  ElevatedButton(
-                      child: Text('Edit'),
-                      onPressed: () {
-                        widget.onUpdate(widget.observation);
-                      }
-                  ),
-                  ElevatedButton(
-                      child: Text('Delete'),
-                      onPressed: () {
-                        widget.onDelete(widget.observation);
-                      }
-                  )
-                ]
-                )
-        )
-      ]),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Row(
+              children: <Widget>[
+                ElevatedButton(
+                  child: Text('Edit'),
+                  onPressed: () {
+                    widget.onUpdate(widget.observation);
+                  },
+                ),
+                ElevatedButton(
+                  child: Text('Delete'),
+                  onPressed: () {
+                    widget.onDelete(widget.observation);
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
-
 }
