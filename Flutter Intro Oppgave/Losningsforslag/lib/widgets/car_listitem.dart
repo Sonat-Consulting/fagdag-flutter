@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fagdag/data/cars_data.dart';
+import 'package:flutter_fagdag/widgets/car_detail.dart';
 
 class CarListItem extends StatelessWidget {
   final Car car;
@@ -11,16 +12,20 @@ class CarListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        return onTap(car);
+        return Navigator.push(context,
+            MaterialPageRoute(builder: (context) => CarDetail(car: car)));
       },
       child: Card(
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Stack(
           children: <Widget>[
-            Image.network(
-              car.photoUrl.toString(),
-              fit: BoxFit.fill,
+            Hero(
+              tag: 'carimage${car.model}',
+              child: Image.network(
+                car.photoUrl.toString(),
+                fit: BoxFit.fill,
+              ),
             ),
             Positioned(
               bottom: 50,

@@ -38,9 +38,9 @@ class _CarsListState extends State<CarsList> {
             } else if (snapshot.hasData) {
               List<Car> cars = snapshot.data;
               return SizedBox(
-                height: 160.0,
+                height: MediaQuery.of(context).size.height - kToolbarHeight,
                 child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
+                  scrollDirection: Axis.vertical,
                   itemCount: cars.length,
                   itemBuilder: (context, index) {
                     return CarListItem(
@@ -60,7 +60,7 @@ class _CarsListState extends State<CarsList> {
 
   SizedBox buildProgressIndicator(BuildContext context) {
     return SizedBox(
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height - kToolbarHeight,
         child: Center(child: CircularProgressIndicator()));
   }
 }

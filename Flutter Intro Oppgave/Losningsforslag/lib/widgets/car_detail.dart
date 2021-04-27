@@ -30,32 +30,40 @@ class _CarDetailState extends State<CarDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(children: [
-        buildTable(),
-        Card(
-          semanticContainer: true,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: Stack(
-            children: <Widget>[
-              Image.network(
-                widget.car.photoUrl.toString(),
-                fit: BoxFit.fill,
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(children: [
+          buildTable(),
+          Card(
+            semanticContainer: true,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Stack(
+              children: <Widget>[
+                Hero(
+                  tag: 'carimage${widget.car.model}',
+                  child: Image.network(
+                    widget.car.photoUrl.toString(),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ],
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            elevation: 5,
+            margin: EdgeInsets.all(10),
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
+          Center(
+            child: Text(message,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
           ),
-          elevation: 5,
-          margin: EdgeInsets.all(10),
-        ),
-        Center(
-          child: Text(message,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 
