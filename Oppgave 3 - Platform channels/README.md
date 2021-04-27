@@ -1,4 +1,4 @@
-# Oppgave 4 - Platform channels
+# Oppgave 3 - Platform channels
 
 Denne oppgaven gir en innføring i platform channels, som er måten å kommunisere med plattform-spesifikk kode.
 I de fleste tilfeller er ikke dette nødvendig, da det allerede finnes pakker for det meste.
