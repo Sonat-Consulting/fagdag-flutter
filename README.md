@@ -10,6 +10,6 @@ Flutter kan bygges for både iOS, Android, macOS, Linux, Windows og web. Det er 
 
 ## CRUD oppgave
 
-Open the Flutter project in the folder ```fagdag-flutter-april-2021/crud_assignment```, and follow the README.md in that folder.
+Open the Flutter project in the folder ```fagdag-flutter-april-2021/observatory```, and follow the README.md in that folder.
 
-Solutions suggestion are available on the branch ```crud_assignment_suggested_solutions```.
+Solutions suggestion are available on the branch ```observatory_suggested_solutions```.
