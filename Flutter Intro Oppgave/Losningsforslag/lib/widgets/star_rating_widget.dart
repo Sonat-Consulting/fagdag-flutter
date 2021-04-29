@@ -7,14 +7,12 @@ class StarRatingWidget extends StatelessWidget {
   final Widget unfilledStar =
       Icon(Icons.star_border_outlined, color: Colors.grey);
 
-  final Function onRatingChanged;
+  final Function? onRatingChanged;
 
   StarRatingWidget({
-    Key key,
     this.value = 0,
     this.onRatingChanged,
-  })  : assert(value != null),
-        super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,5 +26,5 @@ class StarRatingWidget extends StatelessWidget {
     );
   }
 
-  handleStarTap(int index) => onRatingChanged(index);
+  handleStarTap(int index) => onRatingChanged!(index);
 }
