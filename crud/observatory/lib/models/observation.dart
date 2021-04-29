@@ -3,12 +3,14 @@ class Observation {
   final String userId;
   final String title;
   final String? description;
+  final String imageUrl;
 
   Observation({
     this.id,
     required this.userId,
     required this.title,
     this.description,
+    required this.imageUrl,
   });
 
   factory Observation.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class Observation {
       userId: json['userId'],
       title: json['title'],
       description: json['description'],
+      imageUrl: json['imageUrl'],
     );
   }
 
@@ -26,6 +29,7 @@ class Observation {
       'userId': userId,
       'title': title,
       'description': description,
+      'imageUrl': imageUrl,
     };
   }
 }

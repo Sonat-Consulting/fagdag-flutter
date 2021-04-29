@@ -4,13 +4,15 @@
       "id": 1,
       "userId": "c3fe54f7-9aeb-4719-9bd9-9b6bdd3efc62",
       "title": "M13",
-      "description": "Globular cluster in Hercules"
+      "description": "Globular cluster in Hercules",
+      "imageUrl": "https://apod.nasa.gov/apod/image/1110/AuroraOntario_MPark900.jpg"
     },
     {
       "id": 2,
       "userId": "c3fe54f7-9aeb-4719-9bd9-9b6bdd3efc62",
       "title": "M31",
-      "description": "Andromeda galaxy"
+      "description": "Andromeda galaxy",
+      "imageUrl": "https://apod.nasa.gov/apod/image/1207/30dor_hst_960.jpg"
     }
   ]
 }

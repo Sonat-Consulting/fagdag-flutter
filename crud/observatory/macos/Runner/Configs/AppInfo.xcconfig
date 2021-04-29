@@ -8,7 +8,7 @@
 PRODUCT_NAME = observatory
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = no.sonat.crudAssignment
+PRODUCT_BUNDLE_IDENTIFIER = no.sonat.observatory
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2021 no.sonat. All rights reserved.
