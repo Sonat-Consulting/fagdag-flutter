@@ -3,8 +3,6 @@ import 'package:observatory/state/observation_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'add_observation_page.dart';
-
 class ObservationPage extends StatefulWidget {
   @override
   _ObservationPageState createState() => _ObservationPageState();
@@ -16,19 +14,18 @@ class _ObservationPageState extends State<ObservationPage> {
     await Future.delayed(Duration(seconds: 1));
   }
 
-  void onObservationCreated(Observation observation) {
-    // TODO: Oppdater listen med nytt element
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Observation added 🔭'),
-      ),
-    );
+  void onObservationCreated(Observation? observation) {
+    // TODO: Lag noe som viser at observasjonen er lagt til
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ObservationState>(
       builder: (context, state, child) {
+        if (state.observations == null) {
+          state.fetchObservations();
+        }
+
         return Scaffold(
           appBar: AppBar(
             title: Text('Observations'),
@@ -39,13 +36,9 @@ class _ObservationPageState extends State<ObservationPage> {
           ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add_rounded),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => AddObservationPage(
-                  onObservationCreated: onObservationCreated,
-                ),
-              ),
-            ),
+            onPressed: () => Navigator.of(context)
+                .pushNamed('/add')
+                .then((result) => onObservationCreated(result as Observation)),
           ),
         );
       },
@@ -59,6 +52,8 @@ class ObservationList extends StatelessWidget {
   const ObservationList({Key? key, required this.observations})
       : super(key: key);
 
+  int get count => observations?.length ?? 0;
+
   @override
   Widget build(BuildContext context) {
     if (observations != null) {
@@ -67,17 +62,7 @@ class ObservationList extends StatelessWidget {
         itemBuilder: (context, index) {
           final observation = observations![index];
 
-          return ObservationTile(
-            observation: observation,
-            onDelete: (toDelete) {
-              if (toDelete.id != null) {
-                Provider.of<ObservationState>(context).delete(toDelete.id!);
-              }
-            },
-            onUpdate: (toUpdate) {
-              // TODO Implement assignment 1
-            },
-          );
+          return ObservationTile(observation: observation);
         },
       );
     } else {
@@ -88,41 +73,30 @@ class ObservationList extends StatelessWidget {
   }
 }
 
-class ObservationTile extends StatefulWidget {
+class ObservationTile extends StatelessWidget {
   ObservationTile({
     Key? key,
     required this.observation,
-    required this.onDelete,
-    required this.onUpdate,
   }) : super(key: key);
 
   final Observation observation;
-  final Function(Observation) onDelete;
-  final Function(Observation) onUpdate;
-
-  @override
-  _ObservationTileState createState() => _ObservationTileState();
-}
-
-class _ObservationTileState extends State<ObservationTile> {
-  bool edit = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black12, width: 0.5),
+        border: Border.symmetric(
+          horizontal: BorderSide(color: Colors.black12, width: 0.5),
+        ),
       ),
       child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text(widget.observation.title),
-        subtitle: Text(widget.observation.description ?? ''),
-        leading: Image.asset('images/globular.png'),
+        title: Text(observation.title),
+        subtitle: Text(observation.description ?? ''),
+        trailing: Container(
+          width: 72.0,
+          height: double.infinity,
+          child: Image.network(observation.imageUrl, fit: BoxFit.cover),
+        ),
       ),
     );
   }

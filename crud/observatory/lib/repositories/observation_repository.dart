@@ -7,6 +7,7 @@ import 'package:observatory/models/observation.dart';
 class ObservationRepository {
   static const _base = 'observations';
 
+  // Fyll inn maskinens IP om du kjører på fysisk enhet
   String get _host => Platform.isAndroid ? '10.0.2.2:8082' : 'localhost:8082';
 
   Map<String, String> _baseHeaders = {
@@ -17,7 +18,7 @@ class ObservationRepository {
   Uri _idUri(int id) => Uri.http(_host, '$_base/$id');
 
   Future<Response> deleteObservation(int id) async {
-    final Response response = await delete(
+    final response = await delete(
       _idUri(id),
       headers: _baseHeaders,
     );

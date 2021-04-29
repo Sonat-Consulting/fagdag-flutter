@@ -11,12 +11,15 @@ class ObservationState extends ChangeNotifier {
 
   ObservationState() : this._repository = ObservationRepository();
 
-  Future<void> fetchObservations() async {
+  Future<List<Observation>?> fetchObservations() async {
     await list().then((data) {
       _observations = data;
       notifyListeners();
+      return data;
     });
   }
+
+  Observation? find(int id) => _observations?.firstWhere((e) => e.id == id);
 
   Future<Observation> create(Observation observation) =>
       _repository.createObservation(observation);
