@@ -15,7 +15,7 @@ Guide for dette finner du her: https://developer.android.com/studio/run/managing
 Vi tar utgangspunkt i sample-prosjektet som du får ved å opprette et nytt prosjekt.
 I Android Studio er dette File -> New -> New Flutter Project,
 evt du kan kjøre kommandoen `flutter create platform_channel_demo`.
-Åpn prosjektet i IDEen din og sjekk at du får kjørt det på emulatoren.
+Åpne prosjektet i IDEen din og sjekk at du får kjørt det på emulatoren.
 
 ## Opprette en MethodChannel i Flutter
 Definér en MethodChannel i _MyHomePageState:
@@ -35,8 +35,8 @@ Bytt så ut metoden `_incrementCounter` med en metode for å hente batteristatus
   void _getBatteryLevel() async {
     String batteryLevel;
     try {
-      final String result = await platform.invokeMethod('getBatteryLevel');
-      batteryLevel = result;
+      final int result = await platform.invokeMethod('getBatteryLevel');
+      batteryLevel = result.toString();
     } on PlatformException catch (e) {
       batteryLevel = "Failed to get battery level: '${e.message}'.";
     } on Exception catch (e) {
@@ -52,11 +52,11 @@ Ved å oppdatere `_batteryLevel` inni `setState` sørger vi for at viewet blir o
 ## Oppdatere build-metoden til å vise resultatet
 * Endre tittelteksten til f.eks. 'Battery level is:'
 * Endre slik at verdien hentes fra `_batteryLevel` i stedet for `_counter`
-* Endre knappen til å være en `ElevatedButton`, med en fornuftig tekst.
-* Kjør appen, og se hva som skjer nå
+* Endre knappen til å være en `ElevatedButton`, med en fornuftig tekst, og sørg for at den kaller riktig funksjon.
+* Kjør appen, og se hva som skjer når knappen trykkes
 
 ## Lag plattform-implementasjonen i Android
-* Åpn under-prosjektet `android` i et nytt vindu
+* Åpne under-prosjektet `android` i et nytt vindu
 * Finn MainActivity
 * Overstyr metoden `configureFlutterEngine`, sett opp en handler for kanalen vi definerte i Flutter,
 og håndter kall til `getBatteryLevel`
@@ -84,9 +84,11 @@ og håndter kall til `getBatteryLevel`
         }
     }
 ```
-* Prøv å kjøre appen på nytt
+* Oppdater `minSdkVersion` i `build.gradle` til 21 for å unngå å håndtere eldre Android-versjoner
+* Kjør appen fra android-prosjektet
+* Du kan endre batterinivå i innstillingene på emulatoren for å teste
 
 ## Ekstra
-* Lag en til funksjon, som f.eks. henter OS-versjonen
+* Legg til en ny funksjon, som f.eks. henter OS-versjonen
 
 
