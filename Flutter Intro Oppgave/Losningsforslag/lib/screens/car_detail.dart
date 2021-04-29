@@ -1,32 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fagdag/data/cars_data.dart';
-import 'package:flutter_fagdag/widgets/star_rating.dart';
+import 'package:flutter_fagdag/widgets/star_rating_widget.dart';
 
 class CarDetail extends StatefulWidget {
   final Car car;
 
-  CarDetail({Key key, this.car}) : super(key: key);
+  CarDetail({required this.car});
 
   @override
   _CarDetailState createState() => _CarDetailState();
 }
 
 class _CarDetailState extends State<CarDetail> {
-  String message;
-
-  @override
-  void initState() {
-    message = "";
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    setState(() {
-      message = "";
-    });
-  }
+  String message = "";
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +71,7 @@ class _CarDetailState extends State<CarDetail> {
         buildTableRow(
           'Eiers rating',
           StarRatingWidget(
-            value: widget.car.rating.stars,
+            value: widget.car.rating?.stars ?? 0,
             onRatingChanged: (newValue) {
               setState(() {
                 message = "Du ønsker å gi denne bilen ratingen $newValue";

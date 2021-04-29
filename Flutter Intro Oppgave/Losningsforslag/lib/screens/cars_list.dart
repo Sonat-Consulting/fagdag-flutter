@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_fagdag/data/cars_data.dart';
-import 'package:flutter_fagdag/widgets/car_detail.dart';
+import 'package:flutter_fagdag/screens/car_detail.dart';
 import 'package:flutter_fagdag/widgets/car_listitem.dart';
 
 class CarsList extends StatefulWidget {
@@ -11,12 +11,12 @@ class CarsList extends StatefulWidget {
 
 class _CarsListState extends State<CarsList> {
   CarsDb _carsList = new CarsDb();
-  Car _currentCar;
-  Future carListFuture;
+
+  late Future carListFuture;
 
   handleCarCardTap(Car car) {
     setState(() {
-      _currentCar = car;
+      //_currentCar = car;
     });
   }
 
@@ -36,15 +36,24 @@ class _CarsListState extends State<CarsList> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return buildProgressIndicator(context);
             } else if (snapshot.hasData) {
-              List<Car> cars = snapshot.data;
+              var cars = snapshot.data as List<Car>;
               return SizedBox(
                 height: MediaQuery.of(context).size.height - kToolbarHeight,
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   itemCount: cars.length,
                   itemBuilder: (context, index) {
-                    return CarListItem(
-                        car: cars[index], onTap: handleCarCardTap);
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    CarDetail(car: cars[index])));
+                      },
+                      child: CarListItem(
+                          car: cars[index], onTap: handleCarCardTap),
+                    );
                   },
                 ),
               );
@@ -53,7 +62,6 @@ class _CarsListState extends State<CarsList> {
             }
           },
         ),
-        _currentCar != null ? CarDetail(car: _currentCar) : Container()
       ],
     );
   }
