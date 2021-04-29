@@ -2,11 +2,15 @@
 
 
 
-1. Stjerne-rating av bil fungerer ikke når man trykker på en stjerne under en av bilene. Finn ut hva som er galt og fiks det!
+1. Stjerne-rating av bil fungerer ikke når man trykker på en stjerne under en av bilene. Finn ut hva som er galt og fiks det! Tenk "state"...
 
    
 
-2. I "databasen" vår som ligger i filen cars.data oppstår det en feil fra tid til annen når vi prøver å laste inn listen over bilene. Faktisk ca hver 10. gang (se filen lib/data/cars_data.dart). Håndter feilen i koden og vis et ikon som passer sammen med beskrivende tekst istedenfor listen over biler.
+2. I "databasen" vår som ligger i filen cars.data oppstår det en feil fra tid til annen når vi prøver å laste inn listen over bilene. Faktisk ca hver 10. gang (se filen lib/data/cars_data.dart). Håndter feilen i UI-koden som laster inn listen og lag en fin Error widget som håndterer feilen. Bruk gjerne bilder og tekst sammen , og få det sentrer på skjermen.
+
+   
+
+   Under mappen Løsningsforslag vil du kunne se mulig løsning på oppgavene.
 
    
 
