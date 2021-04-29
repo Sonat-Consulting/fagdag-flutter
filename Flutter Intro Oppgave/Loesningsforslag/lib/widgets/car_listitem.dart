@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fagdag/data/cars_data.dart';
-import 'package:flutter_fagdag/screens/car_detail.dart';
 
 class CarListItem extends StatelessWidget {
   final Car car;
