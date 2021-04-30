@@ -1,0 +1,10 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  json-server:
+    image: clue/json-server
+    entrypoint: ['bash','/run.sh','-d','1000']
+    ports:
+      - '127.0.0.1:8082:80'
+    volumes:
+      - ./source.json:/data/db.json
+
