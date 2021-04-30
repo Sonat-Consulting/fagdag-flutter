@@ -9,8 +9,16 @@ class ObservationPage extends StatelessWidget {
     await Future.delayed(Duration(seconds: 1));
   }
 
-  void onObservationCreated(Observation? observation) {
-    // TODO: Lag noe som viser at observasjonen er lagt til
+  void onObservationCreated(BuildContext context, Observation? observation) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Observation ${observation?.title} added 🔭'),
+    ));
+  }
+
+  void onError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('$message 💥'),
+    ));
   }
 
   @override
@@ -31,9 +39,10 @@ class ObservationPage extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add_rounded),
-            onPressed: () => Navigator.of(context)
-                .pushNamed('/modify')
-                .then((result) => onObservationCreated(result as Observation)),
+            onPressed: () {
+              Navigator.of(context).pushNamed('/modify').then((result) =>
+                  onObservationCreated(context, result as Observation));
+            },
           ),
         );
       },

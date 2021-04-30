@@ -1,23 +1,31 @@
-## Assignment
+# Observatory
 
-In this assignment we will integrate with an API that delivers JSON over HTTP, to manage a list of observations we have made!
+## Oppgave
 
-The API can be started by doing.
+Vi skal lage en CRUD-applikasjon som bruker et enkelt REST-API til å håndtere en liste med observasjoner vi har gjort. Vi skal kunne opprette, lese, endre og slette observasjoner.
 
-`docker-compose up -d`
+## Oppsett
 
-Which will start the API on `localhost:8082`, this API has a artificial 1 second delay, so that we handle a slow API reasonably.
+Vi kjører json-server på baksiden, som kan kjøres opp med
 
-On Android, you can change the host in observations.dart to : `10.0.2.2:8082` to hit the local server.
+```bash
+docker compose up -d
+```
 
-### Assignment 1
+og starter på localhost:8082. Dersom du kjører på Android, er APIet tilgjengelig på 10.0.2.2:8082, men om du kjører på en fysisk enhet må du finne maskinens IP for å kunne koble til (endres i `lib/repositories/observation_repository.dart`).
 
-Add the HTTP call and state changes necessary to update an existing observation in the list.
+## Oppgave 1
 
-### Assignment 2
+Legg til et kall i `onRefresh` som oppdaterer dataene i listen.
 
-Error handling is non-existent, create a way to sensibly notify that an operation failed, and recover.
+## Oppgave 2
 
-### Assignment 3
+Implementer oppretting av observasjon og navigasjon tilbake til listen.
 
-Right now the list of observations is not visible while updating. Ensure the list is visible while updating.
+## Oppgave 3
+
+Legg til et PUT-kall for å oppdatere en gitt observasjon.
+
+## Oppgave 4
+
+Implementer sletting og oppdatering fra detalj-siden.

@@ -202,3 +202,31 @@ class Data {
 ---
 
 # Oppgave!
+
+---
+
+# Observatory
+
+![bg right](assets/icon/foreground.png)
+
+En app for å registrere astronomiske observasjoner 🪐
+
+---
+
+# Backend
+
+Enkelt REST-API bygget på json-server. Kjør opp først:
+```
+docker compose up
+```
+
+---
+
+# Funksjonalitet
+
+* Se en liste over observasjoner
+* Opprette en observasjon
+* Oppdatere en observasjon
+* Slette en observasjon
+
+Basically, CRUD.

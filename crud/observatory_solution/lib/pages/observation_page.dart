@@ -14,12 +14,22 @@ class ObservationPage extends StatelessWidget {
     ));
   }
 
+  void onError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('$message 💥'),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ObservationState>(
       builder: (context, state, child) {
         if (state.observations == null) {
-          state.fetchObservations();
+          state.fetchObservations().catchError(
+            (e) {
+              onError(context, 'Failed to fetch observations');
+            },
+          );
         }
 
         return Scaffold(
