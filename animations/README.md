@@ -2,6 +2,8 @@
 
 Animasjoner og bevegelse i et brukergrensesnitt bidrar til kommunikasjon og "det lille ekstra" som hever oppfattet kvalitet av en app, om brukt med omhu.
 
+[Showcase](https://flutter.github.io/samples/web/animations/#/)
+
 ## Byggeklosser i Flutter
 
 Flutter har et eget bibliotek for å lage og håndtere animasjoner. Noen grunnleggende klasser i biblioteket er;

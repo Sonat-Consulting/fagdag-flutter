@@ -27,13 +27,13 @@ class AnimatedListTile extends StatefulWidget {
 class _AnimatedListTileState extends State<AnimatedListTile> {
   late bool isHovering = false;
 
-  void handleEnter(PointerEnterEvent event) {
+  void handleEnter([dynamic event]) {
     setState(() {
       isHovering = true;
     });
   }
 
-  void handleExit(PointerExitEvent event) {
+  void handleExit([dynamic event]) {
     setState(() {
       isHovering = false;
     });
@@ -61,13 +61,18 @@ class _AnimatedListTileState extends State<AnimatedListTile> {
     return MouseRegion(
       onEnter: handleEnter,
       onExit: handleExit,
-      child: ListTile(
-        leading: leading,
-        title: widget.title,
-        subtitle: widget.subtitle,
-        onTap: widget.onTap,
-        onLongPress: widget.onLongPress,
-        trailing: trailing,
+      child: GestureDetector(
+        onTapDown: handleEnter,
+        onTapUp: handleExit,
+        onTapCancel: handleExit,
+        child: ListTile(
+          leading: leading,
+          title: widget.title,
+          subtitle: widget.subtitle,
+          onTap: widget.onTap,
+          onLongPress: widget.onLongPress,
+          trailing: trailing,
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:animations_example/pages/explicit/trigger.dart';
 import 'package:animations_example/pages/explicit/explicit_animations.dart';
 import 'package:animations_example/pages/external/external_animations.dart';
 import 'package:animations_example/pages/external/playback.dart';
@@ -40,6 +41,9 @@ class AnimatedExampleApp extends StatelessWidget {
         '/implicit/container': (_) => ImplicitContainerPage(),
         '/implicit/switcher': (_) => ImplicitSwitcherPage(),
         '/implicit/hero': (_) => ImplicitHeroPage(),
+
+        // Explicit animations
+        '/explicit/trigger': (_) => ExplicitTriggerTogglePage(),
       },
     );
   }
