@@ -4,6 +4,7 @@ import 'package:flutter_fagdag/data/cars_data.dart';
 import 'package:flutter_fagdag/screens/car_detail.dart';
 import 'package:flutter_fagdag/widgets/car_listitem.dart';
 import 'package:flutter_fagdag/widgets/my_error_widget.dart';
+import 'package:flutter_fagdag/widgets/snapshot_handler.dart';
 
 class CarsList extends StatefulWidget {
   @override
@@ -14,7 +15,6 @@ class _CarsListState extends State<CarsList> {
   CarsDb _carsList = new CarsDb();
 
   late Future carListFuture;
-
 
   @override
   initState() {
@@ -28,12 +28,11 @@ class _CarsListState extends State<CarsList> {
       children: [
         FutureBuilder(
           future: carListFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return buildProgressIndicator(context);
-            } else if (snapshot.hasError) {
-              return MyErrorWidget(error: snapshot.error);
-            } else if (snapshot.hasData) {
+          builder: (context, snapshot) => SnapshotHandler(
+            snapshot: snapshot,
+            waitingWidget: buildProgressIndicator(context),
+            errorWidget: MyErrorWidget(error: snapshot.error),
+            dataFunction: (data) {
               var cars = snapshot.data as List<Car>;
               return SizedBox(
                 height: MediaQuery.of(context).size.height - kToolbarHeight,
@@ -49,16 +48,13 @@ class _CarsListState extends State<CarsList> {
                                 builder: (context) =>
                                     CarDetail(car: cars[index])));
                       },
-                      child: CarListItem(
-                          car: cars[index]),
+                      child: CarListItem(car: cars[index]),
                     );
                   },
                 ),
               );
-            } else {
-              return Text("Ingen data");
-            }
-          },
+            },
+          ),
         ),
       ],
     );

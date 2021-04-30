@@ -10,6 +10,10 @@
 
    
 
+3. Lag en widget som håndterer de forskjellige states et snapshot i en Futurebuilder kan ha, og som sørger for at alle varianter MÅ bli håndtert. Endre på den i screens/cars_list.dart
+
+   
+
    Under mappen Løsningsforslag vil du kunne se mulig løsning på oppgavene.
 
    

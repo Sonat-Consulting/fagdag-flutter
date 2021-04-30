@@ -4,7 +4,7 @@ class CarsDb {
   Future<List<Car>> getCarsList() async {
     await Future.delayed(const Duration(seconds: 2));
 
-    int failEveryXTime = 2;
+    int failEveryXTime = 10;
     int randomNumber = Random().nextInt(failEveryXTime) + 1;
 
     if (randomNumber == 1) {
