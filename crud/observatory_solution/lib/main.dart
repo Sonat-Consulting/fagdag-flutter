@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:observatory/pages/modify_observation_page.dart';
-import 'package:observatory/pages/observation_details_page.dart';
+import 'package:observatory_solution/pages/modify_observation_page.dart';
+import 'package:observatory_solution/pages/observation_details_page.dart';
 
-import 'package:observatory/pages/observation_page.dart';
-import 'package:observatory/state/image_state.dart';
+import 'package:observatory_solution/pages/observation_page.dart';
+import 'package:observatory_solution/state/image_state.dart';
 import 'package:provider/provider.dart';
-import 'package:observatory/state/observation_state.dart';
+import 'package:observatory_solution/state/observation_state.dart';
 
 void main() {
   runApp(ObservatoryApp());

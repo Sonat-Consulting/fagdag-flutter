@@ -1,16 +1,17 @@
-import 'package:observatory/models/observation.dart';
-import 'package:observatory/state/observation_state.dart';
+import 'package:observatory_solution/models/observation.dart';
+import 'package:observatory_solution/state/observation_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ObservationPage extends StatelessWidget {
   Future<void> onRefresh(ObservationState state) async {
-    // TODO: Implementer refresh-mekanisme
-    await Future.delayed(Duration(seconds: 1));
+    await state.fetchObservations();
   }
 
-  void onObservationCreated(Observation? observation) {
-    // TODO: Lag noe som viser at observasjonen er lagt til
+  void onObservationCreated(BuildContext context, Observation? observation) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Observation ${observation?.title} added 🔭'),
+    ));
   }
 
   @override
@@ -31,9 +32,10 @@ class ObservationPage extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add_rounded),
-            onPressed: () => Navigator.of(context)
-                .pushNamed('/modify')
-                .then((result) => onObservationCreated(result as Observation)),
+            onPressed: () => Navigator.of(context).pushNamed('/modify').then(
+                  (result) =>
+                      onObservationCreated(context, result as Observation),
+                ),
           ),
         );
       },

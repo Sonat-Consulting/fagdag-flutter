@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:http/http.dart';
 import 'dart:convert';
-import 'package:observatory/models/observation.dart';
+import 'package:observatory_solution/models/observation.dart';
 
 class ObservationRepository {
   static const _base = 'observations';
@@ -35,15 +35,25 @@ class ObservationRepository {
       return Observation.fromJson(jsonDecode(response.body));
     } else {
       throw Exception(
-          'Failed to create observation $obs due to ${response.statusCode}');
+        'Failed to create observation $obs due to ${response.statusCode}',
+      );
     }
   }
 
-  Future<Observation> updateObservation(Observation obs) async {
-    // TODO: Implementer oppdatering (PUT)
-    return Future.delayed(Duration(seconds: 2)).then(
-      (_) => throw Exception("Not implemented"),
+  Future<Observation> updateObservation(int id, Observation obs) async {
+    final response = await put(
+      _idUri(id),
+      headers: _baseHeaders,
+      body: jsonEncode(obs.toJson()),
     );
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return Observation.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception(
+        'Failed to update observation with $id due to ${response.statusCode}',
+      );
+    }
   }
 
   Future<Observation> getObservation(int id) async {
@@ -52,7 +62,8 @@ class ObservationRepository {
       return Observation.fromJson(jsonDecode(response.body));
     } else {
       throw Exception(
-          'Failed to retrieve observation with id: $id due to ${response.statusCode}');
+        'Failed to retrieve observation with id: $id due to ${response.statusCode}',
+      );
     }
   }
 
