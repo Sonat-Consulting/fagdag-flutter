@@ -8,7 +8,8 @@ eller man ønsker å ta i bruk eksisterende plattform-spesifikk kode/biblioteker
 ## Oppsett
 
 For denne øvelsen fokuseres det på Android, og man må derfor sette opp en Android-emulator.
-Guide for dette finner du her: https://developer.android.com/studio/run/managing-avds#createavd
+Guide for dette finner du her: https://developer.android.com/studio/run/managing-avds#createavd.
+Alternativt kan du koble til en Android-telefon med utviklermodus og USB-feilsøking aktivert.
 
 ## Utgangspunkt
 
