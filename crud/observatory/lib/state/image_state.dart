@@ -6,7 +6,9 @@ class ImageState extends ChangeNotifier {
   final ImageRepository _repository;
 
   List<NasaImage>? _images;
-  List<NasaImage>? get images => _images;
+  List<NasaImage>? get images => _images
+      ?.where((i) => i.url != null && !i.url!.contains('youtube'))
+      .toList();
 
   ImageState() : this._repository = ImageRepository();
 

@@ -151,10 +151,10 @@ Vi kan lage en statisk `factory`-konstruktør!
 ```dart
 factory Data.fromJson(Map<String, dynamic> json) {
   return Data(
-      id: json['id'],
-      name: json['name'],
-      valid: json['valid'],
-    );
+    id: json['id'],
+    name: json['name'],
+    valid: json['valid'],
+  );
 }
 ```
 
@@ -216,6 +216,7 @@ En app for å registrere astronomiske observasjoner 🪐
 # Backend
 
 Enkelt REST-API bygget på json-server. Kjør opp først:
+
 ```
 docker compose up
 ```
@@ -224,9 +225,36 @@ docker compose up
 
 # Funksjonalitet
 
-* Se en liste over observasjoner
-* Opprette en observasjon
-* Oppdatere en observasjon
-* Slette en observasjon
+- Se en liste over observasjoner
+- Opprette en observasjon
+- Oppdatere en observasjon
+- Slette en observasjon
 
-Basically, CRUD.
+---
+
+# Provider
+
+```
+ChangeNotifierProvider<ObservatoryProvider>
+|-MaterialApp
+|--Scaffold
+|---Container
+|----Consumer<ObservatoryProvider>
+|-----Provider.of<ObservatoryProvider>(context)
+```
+
+---
+
+# ChangeNotifier
+
+```dart
+class Example extends ChangeNotifier {
+  String? _value;
+  String? get value => _value;
+
+  void foo() {
+    _value = 'bar';
+    notifyListeners();
+  }
+}
+```

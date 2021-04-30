@@ -159,7 +159,7 @@ class ImagePicker extends StatelessWidget {
               final selected = selection != null && selection == image.url;
 
               return GestureDetector(
-                onTap: () => onSelected?.call(image.url),
+                onTap: () => onSelected?.call(image.url!),
                 child: Container(
                   width: 128.0,
                   height: 128.0,
@@ -170,7 +170,7 @@ class ImagePicker extends StatelessWidget {
                     ),
                   ),
                   child: Image.network(
-                    image.url,
+                    image.url!,
                     fit: BoxFit.cover,
                   ),
                 ),

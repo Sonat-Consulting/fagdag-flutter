@@ -5,7 +5,7 @@ class NasaImage {
   final String? mediaType;
   final String? serviceVersion;
   final String? title;
-  final String url;
+  final String? url;
 
   NasaImage({
     this.date,
@@ -14,7 +14,7 @@ class NasaImage {
     this.mediaType,
     this.serviceVersion,
     this.title,
-    required this.url,
+    this.url,
   });
 
   factory NasaImage.fromJson(Map<String, dynamic> json) {
