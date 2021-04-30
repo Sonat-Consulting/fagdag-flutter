@@ -5,6 +5,8 @@ I de fleste tilfeller er ikke dette nødvendig, da det allerede finnes pakker fo
 Men i enkelte tilfeller trenger man tilgang til native funksjonalitet som ikke allerede er implementert i flutter,
 eller man ønsker å ta i bruk eksisterende plattform-spesifikk kode/biblioteker.
 
+![Overview](PlatformChannels.png)
+
 ## Oppsett
 
 For denne øvelsen fokuseres det på Android, og man må derfor sette opp en Android-emulator.
