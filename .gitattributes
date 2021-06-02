@@ -1,0 +1,4 @@
+*/presentation/** linguist-vendored
+*.xcodeproj linguist-vendored
+*.xcworkspace linguist-vendored
+*/**/index.html linguist-vendored
