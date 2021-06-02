@@ -1,3 +1,4 @@
+import 'package:animations_example/pages/explicit/spinning_text.dart';
 import 'package:animations_example/pages/explicit/trigger.dart';
 import 'package:animations_example/pages/explicit/explicit_animations.dart';
 import 'package:animations_example/pages/external/external_animations.dart';
@@ -44,6 +45,7 @@ class AnimatedExampleApp extends StatelessWidget {
 
         // Explicit animations
         '/explicit/trigger': (_) => ExplicitTriggerTogglePage(),
+        '/explicit/spinning': (_) => SpinningText(),
       },
     );
   }

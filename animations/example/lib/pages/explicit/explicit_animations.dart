@@ -15,6 +15,11 @@ class ExplicitAnimationsPage extends StatelessWidget {
             subtitle: Text('AnimationController'),
             onTap: () => Navigator.of(context).pushNamed('/explicit/trigger'),
           ),
+          AnimatedListTile(
+            title: Text('Spinnende tekst'),
+            subtitle: Text('AnimationController'),
+            onTap: () => Navigator.of(context).pushNamed('/explicit/spinning'),
+          ),
         ],
       ),
     );

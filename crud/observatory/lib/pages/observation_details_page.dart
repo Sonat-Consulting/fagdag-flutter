@@ -33,7 +33,10 @@ class ObservationDetailsPage extends StatelessWidget {
                   IconButton(
                     icon: Icon(Icons.edit_rounded),
                     onPressed: () {
-                      // TODO: Implementer oppdatering av observasjon
+                      Navigator.of(context).pushNamed(
+                        '/modify',
+                        arguments: observation,
+                      );
                     },
                   ),
                 ],

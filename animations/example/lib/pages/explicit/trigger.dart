@@ -7,10 +7,11 @@ class ExplicitTriggerTogglePage extends StatefulWidget {
 }
 
 class _ExplicitTriggerTogglePageState extends State<ExplicitTriggerTogglePage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> containerSize;
   late Animation<Color?> containerColor;
+  late Animation<double> containerRadius;
 
   @override
   void initState() {
@@ -28,6 +29,11 @@ class _ExplicitTriggerTogglePageState extends State<ExplicitTriggerTogglePage>
     containerColor = ColorTween(
       begin: Colors.green,
       end: Colors.blue,
+    ).animate(controller);
+
+    containerRadius = Tween(
+      begin: 0.0,
+      end: 100.0,
     ).animate(controller);
   }
 
@@ -47,7 +53,10 @@ class _ExplicitTriggerTogglePageState extends State<ExplicitTriggerTogglePage>
                 return Container(
                   width: containerSize.value,
                   height: containerSize.value,
-                  color: containerColor.value,
+                  decoration: BoxDecoration(
+                    color: containerColor.value,
+                    borderRadius: BorderRadius.circular(containerRadius.value),
+                  ),
                 );
               },
             ),
@@ -57,9 +66,11 @@ class _ExplicitTriggerTogglePageState extends State<ExplicitTriggerTogglePage>
                 switch (controller.status) {
                   case AnimationStatus.completed:
                   case AnimationStatus.reverse:
+                    controller.duration = Duration(seconds: 1);
                     controller.reverse();
                     break;
                   default:
+                    controller.duration = Duration(seconds: 5);
                     controller.forward();
                 }
               },

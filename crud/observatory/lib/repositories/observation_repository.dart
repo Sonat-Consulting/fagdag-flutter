@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:observatory/models/observation.dart';
@@ -8,7 +9,11 @@ class ObservationRepository {
   static const _base = 'observations';
 
   // Fyll inn maskinens IP om du kjører på fysisk enhet
-  String get _host => Platform.isAndroid ? '10.0.2.2:8082' : 'localhost:8082';
+  String get _host => kIsWeb
+      ? 'localhost:8082'
+      : Platform.isAndroid
+          ? '10.0.2.2:8082'
+          : 'localhost:8082';
 
   Map<String, String> _baseHeaders = {
     'Content-Type': 'application/json; charset=UTF-8',
